@@ -1,0 +1,31 @@
+#!/bin/bash
+
+DIRECTORY="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+function error {
+  echo -e "\\e[91m$1\\e[39m"
+  exit 1
+}
+
+latesthash="$(wget -qO- https://archive.org/download/box86.7z_20200928/box86sum.txt)"
+localhash="$(cat "${DIRECTORY}/box86.hash")"
+
+if [ -z "$latesthash" ];then
+  error "Failed to get latest box86 hash. Are you connected to the internet?"
+fi
+
+if [ -z "$localhash" ];then
+  update=1
+elif [ ! "$localhash" == "$latesthash" ];then
+  update=1
+else
+  update=0
+fi
+
+if [ "$update" == 0 ];then
+  echo "No box86 updates available. Exiting now."
+  exit 0
+else
+  #update
+  "${DIRECTORY}/update-box86"
+fi

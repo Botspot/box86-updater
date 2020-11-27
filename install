@@ -1,0 +1,57 @@
+#!/bin/bash
+
+DIRECTORY="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+function error {
+  echo -e "\\e[91m$1\\e[39m"
+  exit 1
+}
+
+number="$(echo "1
+Automatically keep Box86 updated, on a weekly basis.
+2
+Ask permission before updating Box86, on a weekly basis.
+3
+View Box86 Github repository.
+4
+Uninstall Box86 Updater.
+5
+Uninstall Box86 Updater <b>and Box86</b>." | yad --center --title='Box86 Updater' --width=500 --height=200 \
+  --text="What can Box86 Updater do for you today?" --list --no-headers \
+  --separator='\n' --window-icon="${DIRECTORY}/box86.png" \
+  --column=num:HD --column=Name --print-column=1 || exit 0)"
+
+if [ "$number" == 1 ] || [ "$number" == 2 ];then
+  if [ "$number" == 1 ];then
+    # Automatically keep Box86 updated, on a weekly basis.
+    autostartmode=auto
+  elif [ "$number" == 2 ];then
+    # Ask permission before updating Box86, on a weekly basis.
+    autostartmode=ask
+  fi
+  #make desktop file
+  echo "[Desktop Entry]
+Name=Box86 updater
+Type=Application
+Exec=bash -c "'"sleep 5;${DIRECTORY}/onboot $autostartmode"'"
+Terminal=false
+Categories=Utility;" > ~/.config/autostart/box86-updater.desktop
+  exit 0
+elif [ "$number" == 3 ];then
+  # View Box86 Github repository.
+  chromium-browser 'https://github.com/ptitSeb/box86' &
+  exit 0
+elif [ "$number" == 4 ];then
+  # Uninstall Box86 Updater.
+  rm -f ~/.config/autostart/box86-updater.desktop
+  rm -rf "$DIRECTORY"
+  exit 0
+elif [ "$number" == 5 ];then
+  # Uninstall Box86 Updater and Box86.
+  rm -f ~/.config/autostart/box86-updater.desktop
+  sudo rm -f /usr/local/bin/box86 /etc/binfmt.d/box86.conf
+  rm -rf "$DIRECTORY"
+  exit 0
+else
+  error "Unrecognized selection."
+fi
