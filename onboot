@@ -25,7 +25,19 @@ fi
 if [ "$update" == 0 ];then
   echo "No box86 updates available. Exiting now."
   exit 0
-else
-  #update
-  "${DIRECTORY}/update-box86"
 fi
+#else (update available)
+
+if [ "$1" == ask ];then
+  screen_width="$(xdpyinfo | grep 'dimensions:' | tr 'x' '\n' | tr ' ' '\n' | sed -n 7p)"
+  screen_height="$(xdpyinfo | grep 'dimensions:' | tr 'x' '\n' | tr ' ' '\n' | sed -n 8p)"
+  
+  yad --form --text='
+Box86 can be updated.' \
+    --on-top --skip-taskbar --undecorated --close-on-unfocus \
+    --geometry=260+$((screen_width-262))+$((screen_height-150)) \
+    --image="${DIRECTORY}/icons/box86.png" \
+    --button="Settings":1 --button="Update now!${DIRECTORY}/icons/update.png":0 || ("${DIRECTORY}/configure";exit 0)
+fi
+
+"${DIRECTORY}/update-box86"
