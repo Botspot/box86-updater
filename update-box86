@@ -25,3 +25,4 @@ sudo cp -avf "$(pwd)/usr"/* /usr
 
 cd
 rm -rf "${DIRECTORY}/box86.download"
+echo -e "\nDone!"

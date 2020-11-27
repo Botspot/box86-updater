@@ -38,6 +38,7 @@ Box86 can be updated.' \
     --geometry=260+$((screen_width-262))+$((screen_height-150)) \
     --image="${DIRECTORY}/icons/box86.png" \
     --button="Settings":1 --button="Update now!${DIRECTORY}/icons/update.png":0 || ("${DIRECTORY}/configure";exit 0)
+  
 fi
 
-"${DIRECTORY}/update-box86"
+"${DIRECTORY}/terminal-run" "trap 'echo "\""Closing in 10 seconds"\"" ; sleep 10' EXIT; ${DIRECTORY}/update-box86" "Updating box86"
