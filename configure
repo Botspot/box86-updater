@@ -18,7 +18,7 @@ Uninstall Box86 Updater.
 5
 Uninstall Box86 Updater <b>and Box86</b>." | yad --center --title='Box86 Updater' --width=500 --height=200 \
   --text="What can Box86 Updater do for you today?" --list --no-headers \
-  --separator='\n' --window-icon="${DIRECTORY}/box86.png" \
+  --separator='\n' --window-icon="${DIRECTORY}/icons/box86.png" \
   --column=num:HD --column=Name --print-column=1 || exit 0)"
 
 if [ "$number" == 1 ] || [ "$number" == 2 ];then
