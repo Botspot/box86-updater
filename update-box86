@@ -7,6 +7,10 @@ function error {
   exit 1
 }
 
+if [[ "$DIRECTORY" != ${HOME}* ]];then
+  DIRECTORY="$HOME"
+fi
+
 [ -e "${DIRECTORY}/box86.download" ] && rm -rf "${DIRECTORY}/box86.download"
 mkdir "${DIRECTORY}/box86.download"
 cd "${DIRECTORY}/box86.download"
