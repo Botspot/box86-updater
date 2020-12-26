@@ -11,3 +11,7 @@ git clone https://github.com/Botspot/box86-updater
 ```
 ~/box86-updater/configure
 ```
+# Or simply download/update box86 standalone using this command:
+```
+wget -qO- https://raw.githubusercontent.com/Botspot/box86-updater/main/update-box86 | bash
+```
