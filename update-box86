@@ -29,4 +29,5 @@ sudo cp -avf "$(pwd)/usr"/* /usr
 
 cd
 rm -rf "${DIRECTORY}/box86.download"
+rm -rf "${DIRECTORY}/box86.hash"
 echo -e "\nDone!"
