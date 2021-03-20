@@ -13,14 +13,14 @@ fi
 
 [ -e "${DIRECTORY}/box86.download" ] && rm -rf "${DIRECTORY}/box86.download"
 mkdir "${DIRECTORY}/box86.download"
-cd "${DIRECTORY}/box86.download"
+cd "${DIRECTORY}/box86.download" || error "Failed to enter ${DIRECTORY}/box86.download directory"
 
 echo 'Downloading box86...'
-wget https://archive.org/download/box86.7z_20200928/box86.tar.xz
-wget https://archive.org/download/box86.7z_20200928/box86sum.txt -O "${DIRECTORY}/box86.hash"
+wget https://archive.org/download/box86.7z_20200928/box86.tar.xz || error "Failed to download box86.tar.xz"
+wget https://archive.org/download/box86.7z_20200928/box86sum.txt -O "${DIRECTORY}/box86.hash" || error "Failed to download box86.hash"
 
 echo "Extracting box86..."
-tar xf ./box86.tar.xz
+tar xf ./box86.tar.xz || error "Failed to extract box86.tar.xz"
 rm -f ./box86.tar.xz
 
 echo "Installing files..."
@@ -29,4 +29,8 @@ sudo cp -avf "$(pwd)/usr"/* /usr
 
 cd
 rm -rf "${DIRECTORY}/box86.download"
+
+echo "Refreshing binfmt..."
+sudo systemctl restart systemd-binfmt || error "Failed to refresh systemd-binfmt"
+
 echo -e "\nDone!"
