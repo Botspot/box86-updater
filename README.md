@@ -1,3 +1,5 @@
+# This has been deprecated in favor of pi-apps automated box86/64 builds.
+
 # box86-updater
 This fulfills two purposes:
 - Keeps Box86 updated on a weekly basis.
